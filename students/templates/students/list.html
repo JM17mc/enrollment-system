@@ -1,0 +1,43 @@
+{% extends "students/base.html" %}
+{% block title %}Class roster{% endblock %}
+{% block content %}
+<header class="page-head">
+  <h1>Class roster</h1>
+  <p class="muted">Showing {{ students|length }} of {{ total }} students. Select a card to open the full record.</p>
+</header>
+
+<form class="filters" method="get">
+  <input type="search" name="q" value="{{ q }}" placeholder="Search by name or student ID" aria-label="Search students">
+  <select name="section" aria-label="Filter by section">
+    <option value="">All sections</option>
+    {% for s in sections %}<option value="{{ s }}" {% if s == section %}selected{% endif %}>Section {{ s }}</option>{% endfor %}
+  </select>
+  <button type="submit">Apply filters</button>
+</form>
+
+{% if students %}
+<ul class="cards">
+  {% for s in students %}
+  <li>
+    <a class="idcard" href="{% url 'students:detail' s.pk %}">
+      <span class="idcard-band"><span class="slot"></span></span>
+      <span class="photo">{{ s.initials }}</span>
+      <h2>{{ s.first_name }} {{ s.last_name }}</h2>
+      <p class="course">{{ s.course }}</p>
+      <span class="chip {{ s.status|lower }}">{{ s.status }}</span>
+      <dl class="meta">
+        <div><dt>Year</dt><dd>{{ s.year_level }}</dd></div>
+        <div><dt>Section</dt><dd>{{ s.section }}</dd></div>
+        <div><dt>ID</dt><dd>{{ s.student_id }}</dd></div>
+      </dl>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<div class="empty">
+  <p><strong>No students match those filters.</strong></p>
+  <p class="muted">Clear the search or pick another section. To add a student, use <a href="/admin/students/student/add/">Manage students</a>.</p>
+</div>
+{% endif %}
+{% endblock %}

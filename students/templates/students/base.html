@@ -1,0 +1,29 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Enrollment{% endblock %} · Enrollment Desk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'students/style.css' %}">
+</head>
+<body>
+  <div class="shell">
+    <aside class="rail">
+      <a class="brand" href="{% url 'students:list' %}">
+        <span class="mark">E</span>
+        <span class="brand-text">Enrollment desk<small>Admin view</small></span>
+      </a>
+      <nav class="rail-nav">
+        <a class="active" href="{% url 'students:list' %}">Class roster</a>
+        <a href="/admin/">Manage students</a>
+      </nav>
+    </aside>
+    <main class="stage">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</body>
+</html>

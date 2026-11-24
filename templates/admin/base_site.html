@@ -1,0 +1,21 @@
+{% extends "admin/base_site.html" %}
+
+{% block extrastyle %}{{ block.super }}
+<style>
+  .roster-link {
+    display: inline-block;
+    margin-left: 1rem;
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: #2450d8;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .roster-link:hover { background: #1a3ba8; color: #fff; }
+</style>
+{% endblock %}
+
+{% block nav-global %}
+<a class="roster-link" href="{% url 'students:list' %}">← Back</a>
+{% endblock %}

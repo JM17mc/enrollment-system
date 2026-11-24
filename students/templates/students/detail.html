@@ -1,0 +1,59 @@
+{% extends "students/base.html" %}
+{% block title %}{{ student.first_name }} {{ student.last_name }}{% endblock %}
+{% block content %}
+<a class="back" href="{% url 'students:list' %}">Back to roster</a>
+
+<article class="record">
+  <header class="record-head">
+    <span class="photo xl">{{ student.initials }}</span>
+    <div class="record-title">
+      <h1>{{ student.first_name }} {{ student.middle_name }} {{ student.last_name }}</h1>
+      <p>{{ student.student_id }} · {{ student.course }} · Year {{ student.year_level }}, Section {{ student.section }}</p>
+    </div>
+    <span class="chip {{ student.status|lower }}">{{ student.status }}</span>
+  </header>
+
+  <section class="sheet">
+    <h2>Personal information</h2>
+    <dl class="fields">
+      <div><dt>Sex</dt><dd>{{ student.sex }}</dd></div>
+      <div><dt>Birthdate</dt><dd>{{ student.birthdate|date:"F j, Y" }}</dd></div>
+      <div><dt>Birthplace</dt><dd>{{ student.birthplace|default:"—" }}</dd></div>
+      <div><dt>Nationality</dt><dd>{{ student.nationality }}</dd></div>
+      <div><dt>Religion</dt><dd>{{ student.religion|default:"—" }}</dd></div>
+      <div><dt>Civil status</dt><dd>{{ student.civil_status }}</dd></div>
+    </dl>
+  </section>
+
+  <section class="sheet">
+    <h2>Academic information</h2>
+    <dl class="fields">
+      <div class="wide"><dt>Course</dt><dd>{{ student.course }}</dd></div>
+      <div><dt>Year level</dt><dd>{{ student.year_level }}</dd></div>
+      <div><dt>Section</dt><dd>{{ student.section }}</dd></div>
+      <div><dt>School year</dt><dd>{{ student.school_year }}</dd></div>
+      <div><dt>Semester</dt><dd>{{ student.semester }}</dd></div>
+      <div><dt>Enrollment status</dt><dd>{{ student.status }}</dd></div>
+    </dl>
+  </section>
+
+  <section class="sheet">
+    <h2>Background information</h2>
+    <dl class="fields">
+      <div><dt>Father</dt><dd>{{ student.father_name|default:"—" }}{% if student.father_occupation %}<small>{{ student.father_occupation }}</small>{% endif %}</dd></div>
+      <div><dt>Mother</dt><dd>{{ student.mother_name|default:"—" }}{% if student.mother_occupation %}<small>{{ student.mother_occupation }}</small>{% endif %}</dd></div>
+      <div><dt>Guardian</dt><dd>{{ student.guardian_name|default:"—" }}{% if student.guardian_relationship %}<small>{{ student.guardian_relationship }}{% if student.guardian_contact %} · {{ student.guardian_contact }}{% endif %}</small>{% endif %}</dd></div>
+      <div class="wide"><dt>Previous school</dt><dd>{{ student.previous_school|default:"—" }}</dd></div>
+    </dl>
+  </section>
+
+  <section class="sheet">
+    <h2>Contact and address</h2>
+    <dl class="fields">
+      <div><dt>Email</dt><dd><a href="mailto:{{ student.email }}">{{ student.email }}</a></dd></div>
+      <div><dt>Phone</dt><dd>{{ student.phone|default:"—" }}</dd></div>
+      <div class="wide"><dt>Address</dt><dd>{{ student.address|default:"—" }}{% if student.city %}<small>{{ student.city }}{% if student.province %}, {{ student.province }}{% endif %}</small>{% endif %}</dd></div>
+    </dl>
+  </section>
+</article>
+{% endblock %}
